@@ -37,7 +37,7 @@ public class ApplicationMain {
         return individuoPraReproducao;
     }
 
-    private double funcaoDeReproducao(double x, double y){
+    private double funcaoDeReproducao(double individuoX, double individuoY){
         /*Cruza os indíviduos de acordo com um critério e retorna um "filhote"*/
         double filhote;
         return filhote;
