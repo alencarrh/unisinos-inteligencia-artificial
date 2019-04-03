@@ -1,59 +1,56 @@
 package unisinos.inteligencia.artificial.ga;
 
+import static java.util.Arrays.asList;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import unisinos.inteligencia.artificial.ga.config.Configuracao;
+import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
+import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioNumeroMaximoGeracoes;
+import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioParada;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoAptidao;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoCruzamento;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoMutacao;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoSelecao;
+import unisinos.inteligencia.artificial.ga.roteamento.EncontrarMelhorRota;
+
 public class ApplicationMain {
-
-    /*Algoritmo genético de roteamento de caminhões,
-    conforme modelo constante na página 77/79 da aula 4
-     */
-
-    /*INDIVIDUO = UMA SOLUÇÃO.  MAS SERÁ UM SOLUÇÃO PARA UMA ÚNICA
-    ENTREGA OU UMA SOLUÇÃO COMPLETA PRO GRAFO?
-    Coloquei o indivíduo como double inicialmente tratando
-    ele como um valor, mas ainda vamos definir de que tipo ele será */
-
-    /*POPULAÇÃO = TODOS OS INDÍVIDUOS "VIVOS" ATUALMENTE, que por sua vez são
-    potenciais soluções. Estou tratando-as como list
-     */
-
-    //Algoritmo genético de fato.
-    //Os demais métodos são seus componentes
-    //Não sei ainda o formato de retorno
-    public void rotearCaminhoes(populacao){
-
-    }
-
-    private double funcaoDeAptidao(double individuo){
-        double grauDeAptidao;
-
-        /*....*/
-
-        return grauDeAptidao;
-    }
-
-    private double selecaoAleatoria(List populacao){
-       //Embaralha a populacao  e pega o primeiro. Assim faço uma selecao aleatória
-        Collections.shuffle(populacao);
-        double individuoPraReproducao = populacao.get(1);
-        return individuoPraReproducao;
-    }
-
-    private double funcaoDeReproducao(double individuoX, double individuoY){
-        /*Cruza os indíviduos de acordo com um critério e retorna um "filhote"*/
-        double filhote;
-        return filhote;
-    }
-
-    private double funcaoDeMutacao(double individuo){
-        /*Opera a mutação ou não: de acordo com a probabilidade */
-
-        return individuo  //Indivíduo mutado
-    }
 
 
     public static void main(String[] args) {
 
-        System.out.println("Hello World!");
+        List<Configuracao> configuracoes = randomConfigurations();
+        Map<Configuracao, Cromossomo> melhoresCromossomos = new HashMap<>();
 
+        configuracoes.forEach(conguracao -> {
+
+            final EncontrarMelhorRota encontrarMelhorRota = EncontrarMelhorRota.builder()
+                .configuracao(conguracao)
+                .criteriosParadas(criteriosParada())
+                .funcaoAptidao(new FuncaoAptidao())
+                .funcaoCruzamento(new FuncaoCruzamento())
+                .funcaoMutacao(new FuncaoMutacao())
+                .funcaoSelecao(new FuncaoSelecao())
+                .build();
+
+            final Cromossomo melhorRota = encontrarMelhorRota.encontrar();
+            melhoresCromossomos.put(conguracao, melhorRota);
+        });
+
+        System.out.println(melhoresCromossomos);
+    }
+
+    private static List<CriterioParada> criteriosParada() {
+        //TODO revisar
+        return asList(new CriterioNumeroMaximoGeracoes());
+    }
+
+    private static List<Configuracao> randomConfigurations() {
+        //TODO
+        throw new NotImplementedException();
     }
 
 }
