@@ -2,33 +2,62 @@ package unisinos.inteligencia.artificial.ga.roteamento;
 
 import java.util.List;
 
+import lombok.AccessLevel;
 import lombok.Builder;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import lombok.Getter;
+import lombok.Setter;
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
+import unisinos.inteligencia.artificial.ga.domain.Geracao;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
-import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioParada;
 import unisinos.inteligencia.artificial.ga.genetica.Populacao;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoAptidao;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoCruzamento;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoMutacao;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoSelecao;
+import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioParada;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.cruzamento.FuncaoCruzamento;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.populacao.FuncaoPopulacaoInicial;
 
+@Getter
 @Builder
 public class EncontrarMelhorRota {
 
     private final Configuracao configuracao;
-
-    private final FuncaoAptidao funcaoAptidao;
-    private final FuncaoCruzamento funcaoCruzamento;
-    private final FuncaoMutacao funcaoMutacao;
-    private final FuncaoSelecao funcaoSelecao;
-
     private final List<CriterioParada> criteriosParadas;
-    private final List<Populacao> garacoes;
 
+    private final FuncaoCruzamento funcaoCruzamento;
+    private final FuncaoPopulacaoInicial funcaoPopulacaoInicial;
+
+
+    @Setter(value = AccessLevel.NONE)
+    private final List<Geracao> geracoes;
 
     public Cromossomo encontrar() {
-        //TODO
-        throw new NotImplementedException();
+        //obtém a primeira geração
+        geracoes.add(funcaoPopulacaoInicial.gerarPopulacaoInicial(configuracao));
+
+        //chama o callback de todos os critérios de parada para indicar que o algoritmo iniciou
+        criteriosParadas.forEach(CriterioParada::callbackInicio);
+
+        //este loop somente para quando um dos criterios de parada é atigindo
+        while (true) {
+
+            final Populacao novoGeracao = funcaoCruzamento
+                .cruzarPopulacao(configuracao, ultimaGeracao().getPopulacao());
+
+            if (true) { //verificar os criterios de parada para saber quando parar
+                break;
+            }
+        }
+
+        //chama o callback de todos os critérios de parada para indicar que o algoritmo finalizou
+        criteriosParadas.forEach(CriterioParada::callbackFim);
+
+        //TODO determinar retorno
+        return null;
+    }
+
+    private Geracao ultimaGeracao() {
+        return geracoes.get(getGeracaoAtual());
+    }
+
+    private Integer getGeracaoAtual() {
+        return geracoes.size();
     }
 }

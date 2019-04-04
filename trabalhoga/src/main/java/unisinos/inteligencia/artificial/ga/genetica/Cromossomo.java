@@ -9,10 +9,13 @@ import unisinos.inteligencia.artificial.ga.domain.Veiculo;
 
 @Data
 @Builder
-public class Cromossomo {
+public class Cromossomo implements Comparable<Cromossomo> {
 
-    //é uma solução
+    private Map<Veiculo, Rota> rotas;
+    private Double aptidao;
 
-    private final Map<Veiculo, Rota> rotas;
-
+    @Override
+    public int compareTo(final Cromossomo other) {
+        return getAptidao().compareTo(other.getAptidao());
+    }
 }

@@ -23,5 +23,10 @@ public class Configuracao {
      */
     private final Integer numeroGeracoes;
 
+    /**
+     * Quantidade de produtos que o veículo consegue transportar
+     */
+    private final Integer capacidadeCaminhao;
+
 
 }

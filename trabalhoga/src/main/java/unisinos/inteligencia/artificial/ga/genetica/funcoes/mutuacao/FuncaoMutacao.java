@@ -1,4 +1,4 @@
-package unisinos.inteligencia.artificial.ga.genetica.funcoes;
+package unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import unisinos.inteligencia.artificial.ga.config.Configuracao;

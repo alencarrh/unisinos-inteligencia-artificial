@@ -11,37 +11,50 @@ import unisinos.inteligencia.artificial.ga.config.Configuracao;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioNumeroMaximoGeracoes;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioParada;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoAptidao;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoCruzamento;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoMutacao;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.FuncaoSelecao;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.cruzamento.FuncaoCruzamento;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao.FuncaoMutacao;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.populacao.FuncaoPopulacaoInicial;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoCompletamenteAleatoria;
 import unisinos.inteligencia.artificial.ga.roteamento.EncontrarMelhorRota;
 
 public class ApplicationMain {
 
 
     public static void main(String[] args) {
+        final List<Configuracao> configuracoes = randomConfigurations();
+        final Map<Configuracao, Cromossomo> melhoresCromossomos = new HashMap<>();
 
-        List<Configuracao> configuracoes = randomConfigurations();
-        Map<Configuracao, Cromossomo> melhoresCromossomos = new HashMap<>();
-
-        configuracoes.forEach(conguracao -> {
+        configuracoes.forEach(configuracao -> {
 
             final EncontrarMelhorRota encontrarMelhorRota = EncontrarMelhorRota.builder()
-                .configuracao(conguracao)
+                .configuracao(configuracao)
+                .funcaoCruzamento(funcaoCruzamento())
+                .funcaoPopulacaoInicial(funcaoPopulacaoInicial())
                 .criteriosParadas(criteriosParada())
-                .funcaoAptidao(new FuncaoAptidao())
-                .funcaoCruzamento(new FuncaoCruzamento())
-                .funcaoMutacao(new FuncaoMutacao())
-                .funcaoSelecao(new FuncaoSelecao())
                 .build();
 
             final Cromossomo melhorRota = encontrarMelhorRota.encontrar();
-            melhoresCromossomos.put(conguracao, melhorRota);
+
+            melhoresCromossomos.put(configuracao, melhorRota);
+
         });
 
         System.out.println(melhoresCromossomos);
     }
+
+    private static FuncaoPopulacaoInicial funcaoPopulacaoInicial() {
+        return new FuncaoPopulacaoInicial();
+    }
+
+    private static FuncaoCruzamento funcaoCruzamento() {
+        return FuncaoCruzamento.builder()
+            .funcaoMutacao(new FuncaoMutacao())
+
+            //ou qualquer outra função de seleção. ex: FuncaoSelecaoSempreMelhores.
+            .funcaoSelecao(new FuncaoSelecaoCompletamenteAleatoria())
+            .build();
+    }
+
 
     private static List<CriterioParada> criteriosParada() {
         //TODO revisar
