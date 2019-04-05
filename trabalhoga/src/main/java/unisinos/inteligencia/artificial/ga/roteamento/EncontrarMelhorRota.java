@@ -54,7 +54,7 @@ public class EncontrarMelhorRota {
     }
 
     private Geracao ultimaGeracao() {
-        return geracoes.get(getGeracaoAtual());
+        return geracoes.get(getGeracaoAtual()-1);
     }
 
     private Integer getGeracaoAtual() {
