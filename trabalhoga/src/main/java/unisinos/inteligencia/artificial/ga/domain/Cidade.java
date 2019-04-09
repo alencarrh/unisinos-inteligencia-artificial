@@ -17,7 +17,10 @@ public class Cidade {
     private final List<Cidade> vizinhos;
 
     public Integer distanciaDe(final Cidade cidade) {
-        //TODO implementar cálculo da distância euclidiana
-        throw new NotImplementedException();
+
+        Integer distDosX = Math.pow(this.posicao.x - cidade.posicao.x), 2)
+        Integer distDosY =  Math.pow(this.posicao.y - cidade.posicao.y, 2)
+
+        return Math.sqrt(distDosX - distDosY)
     }
 }
