@@ -4,7 +4,6 @@ import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @Data
 @Builder
@@ -16,11 +15,10 @@ public class Cidade {
     private final Integer demanda;
     private final List<Cidade> vizinhos;
 
-    public Integer distanciaDe(final Cidade cidade) {
+    public Double distanciaDe(final Cidade cidade) {
+        double distDosX = Math.pow(this.posicao.getX() - cidade.posicao.getY(), 2);
+        double distDosY = Math.pow(this.posicao.getY() - cidade.posicao.getY(), 2);
 
-        Integer distDosX = Math.pow(this.posicao.x - cidade.posicao.x), 2)
-        Integer distDosY =  Math.pow(this.posicao.y - cidade.posicao.y, 2)
-
-        return Math.sqrt(distDosX - distDosY)
+        return Math.sqrt(distDosX - distDosY);
     }
 }
