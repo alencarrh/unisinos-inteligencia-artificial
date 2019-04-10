@@ -1,12 +1,14 @@
 package unisinos.inteligencia.artificial.ga.genetica.criterio.parada;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import unisinos.inteligencia.artificial.ga.config.Configuracao;
+import unisinos.inteligencia.artificial.ga.genetica.Populacao;
+import unisinos.inteligencia.artificial.ga.roteamento.ParametrosRoteamento;
 
 public class CriterioNumeroMaximoGeracoes implements CriterioParada {
 
     @Override
-    public boolean objetivoAlcancado() {
-        //TODO verifica se chegou no número máximo de gerações configurado, se sim, deve parar.
-        throw new NotImplementedException();
+    public boolean objetivoAlcancado(final Configuracao configuracao, final ParametrosRoteamento parametrosRoteamento,
+        final Populacao populacao) {
+        return false;
     }
 }
