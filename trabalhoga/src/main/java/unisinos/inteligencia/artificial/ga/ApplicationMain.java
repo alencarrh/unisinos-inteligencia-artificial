@@ -15,6 +15,7 @@ import unisinos.inteligencia.artificial.ga.genetica.funcoes.cruzamento.FuncaoCru
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao.FuncaoMutacao;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.populacao.FuncaoPopulacaoInicial;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoCompletamenteAleatoria;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoManterMelhores;
 import unisinos.inteligencia.artificial.ga.roteamento.EncontrarMelhorRota;
 
 public class ApplicationMain {
@@ -28,8 +29,8 @@ public class ApplicationMain {
 
             final EncontrarMelhorRota encontrarMelhorRota = EncontrarMelhorRota.builder()
                 .configuracao(configuracao)
-                .funcaoCruzamento(funcaoCruzamento())
-                .funcaoPopulacaoInicial(funcaoPopulacaoInicial())
+                .funcaoCruzamento(funcaoCruzamento(configuracao))
+                .funcaoPopulacaoInicial(funcaoPopulacaoInicial(configuracao))
                 .criteriosParadas(criteriosParada())
                 .build();
 
@@ -42,16 +43,17 @@ public class ApplicationMain {
         System.out.println(melhoresCromossomos);
     }
 
-    private static FuncaoPopulacaoInicial funcaoPopulacaoInicial() {
-        return new FuncaoPopulacaoInicial();
+    private static FuncaoPopulacaoInicial funcaoPopulacaoInicial(final Configuracao configuracao) {
+        return FuncaoPopulacaoInicial.builder().configuracao(configuracao).build();
     }
 
-    private static FuncaoCruzamento funcaoCruzamento() {
+    private static FuncaoCruzamento funcaoCruzamento(final Configuracao configuracao) {
         return FuncaoCruzamento.builder()
-            .funcaoMutacao(new FuncaoMutacao())
+            .funcaoMutacao(FuncaoMutacao.builder().configuracao(configuracao).build())
 
             //ou qualquer outra função de seleção. ex: FuncaoSelecaoSempreMelhores.
             .funcaoSelecao(new FuncaoSelecaoCompletamenteAleatoria())
+            .funcaoSelecao(new FuncaoSelecaoManterMelhores(10))
             .build();
     }
 

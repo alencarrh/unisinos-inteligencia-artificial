@@ -1,10 +1,14 @@
 package unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao;
 
+import lombok.Builder;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 
+@Builder
 public class FuncaoMutacao {
+
+    private final Configuracao configuracao;
 
     /**
      * Função responsável por aplicar a mutação em um cromossomo. A mutação acontece conforme sua probabilidade de

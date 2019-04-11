@@ -2,12 +2,17 @@ package unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import unisinos.inteligencia.artificial.ga.domain.Selecao;
 import unisinos.inteligencia.artificial.ga.genetica.Populacao;
 
-public class FuncaoSelecaoCompletamenteAleatoria implements FuncaoSelecao {
+@Builder
+@AllArgsConstructor
+public class FuncaoSelecaoManterMelhores implements FuncaoSelecao {
 
+    private final Integer quantidade;
 
     @Override
     public List<Selecao> selecionar(final Populacao populacao) {

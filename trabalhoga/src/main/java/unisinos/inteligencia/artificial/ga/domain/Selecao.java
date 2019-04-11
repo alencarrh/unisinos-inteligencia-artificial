@@ -1,14 +1,15 @@
 package unisinos.inteligencia.artificial.ga.domain;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 
 @Data
 @Builder
-public class Casal {
+public class Selecao {
 
-    private final Cromossomo pai;
-    private final Cromossomo mae;
+    private final List<Cromossomo> cromossomos;
 
 }

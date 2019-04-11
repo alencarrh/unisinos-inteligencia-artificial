@@ -10,6 +10,9 @@ import unisinos.inteligencia.artificial.ga.domain.Rota;
 @Builder
 public class Cromossomo implements Comparable<Cromossomo> {
 
+    /**
+     * Rota 0 indica a rota do primeiro caminhão. Rota 1, segundo caminhão, etc.
+     */
     private List<Rota> rotas;
     private Double aptidao;
 

@@ -38,8 +38,7 @@ public class EncontrarMelhorRota {
         //este loop somente para quando um dos criterios de parada é atigindo
         while (true) {
 
-            final Populacao novoGeracao = funcaoCruzamento
-                .cruzarPopulacao(configuracao, ultimaGeracao().getPopulacao());
+            final Populacao novoGeracao = funcaoCruzamento.cruzarPopulacao(ultimaGeracao().getPopulacao());
 
             if (true) { //verificar os criterios de parada para saber quando parar
                 break;
@@ -54,7 +53,7 @@ public class EncontrarMelhorRota {
     }
 
     private Geracao ultimaGeracao() {
-        return geracoes.get(getGeracaoAtual()-1);
+        return geracoes.get(getGeracaoAtual() - 1);
     }
 
     private Integer getGeracaoAtual() {
