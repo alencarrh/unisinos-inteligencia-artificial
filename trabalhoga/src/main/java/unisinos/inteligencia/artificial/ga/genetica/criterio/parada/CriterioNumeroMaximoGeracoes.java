@@ -2,7 +2,6 @@ package unisinos.inteligencia.artificial.ga.genetica.criterio.parada;
 
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
 import unisinos.inteligencia.artificial.ga.genetica.Populacao;
-import unisinos.inteligencia.artificial.ga.roteamento.ParametrosRoteamento;
 
 public class CriterioNumeroMaximoGeracoes implements CriterioParada {
 

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Singular;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import unisinos.inteligencia.artificial.ga.domain.Selecao;
+import unisinos.inteligencia.artificial.ga.genetica.Selecao;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.Populacao;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao.FuncaoMutacao;
@@ -56,6 +56,10 @@ public class FuncaoCruzamento {
         }
 
         // 1. faz o cruzamento entre os dois(ou N) cromossomos
+
+        //dividir pelo numero de cidades
+            // -> ordenar e deixar 50% das cidades do pai e 50% das cidades da mae
+
 
         // 2. aplica a função de mutação
         funcaoMutacao.aplicarMucatacao(null);

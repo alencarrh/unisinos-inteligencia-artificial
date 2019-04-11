@@ -3,7 +3,7 @@ package unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao;
 import java.util.List;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import unisinos.inteligencia.artificial.ga.domain.Selecao;
+import unisinos.inteligencia.artificial.ga.genetica.Selecao;
 import unisinos.inteligencia.artificial.ga.genetica.Populacao;
 
 public class FuncaoSelecaoCompletamenteAleatoria implements FuncaoSelecao {

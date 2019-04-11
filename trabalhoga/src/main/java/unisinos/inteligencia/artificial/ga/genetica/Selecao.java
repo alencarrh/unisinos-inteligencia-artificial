@@ -1,10 +1,9 @@
-package unisinos.inteligencia.artificial.ga.domain;
+package unisinos.inteligencia.artificial.ga.genetica;
 
 import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
-import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 
 @Data
 @Builder

@@ -18,7 +18,7 @@ public class FuncaoAptidao {
 
         cromossomo.setAptidao(distanciaPercorridaTodosCaminhoes);
 
-        return distanciaPercorridaTodosCaminhoes;
+        return distanciaPercorridaTodosCaminhoes * -1;
     }
 
     private Double calcularDistancia(final List<Cidade> caminho) {
