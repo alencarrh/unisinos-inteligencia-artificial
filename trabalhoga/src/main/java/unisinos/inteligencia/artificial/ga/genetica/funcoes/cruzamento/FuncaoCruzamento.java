@@ -26,7 +26,7 @@ public class FuncaoCruzamento {
         funcoesSelecao.forEach(funcaoSelecao -> {
 
             List<Selecao> selecao = funcaoSelecao.selecionar(populacao);
-            List<Cromossomo> filhos = cruzarCasais(selecao);
+            List<Cromossomo> filhos = cruzarSelecao(selecao);
 
             novaGeracao.addAll(filhos);
 
@@ -37,7 +37,7 @@ public class FuncaoCruzamento {
             .build();
     }
 
-    private List<Cromossomo> cruzarCasais(final List<Selecao> selecao) {
+    private List<Cromossomo> cruzarSelecao(final List<Selecao> selecao) {
         return selecao.stream()
             .map(this::cruzar)
             .collect(Collectors.toList());

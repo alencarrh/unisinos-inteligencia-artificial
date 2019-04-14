@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
+import unisinos.inteligencia.artificial.ga.domain.Mundo;
 import unisinos.inteligencia.artificial.ga.genetica.Geracao;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.Populacao;
@@ -20,17 +21,17 @@ public class EncontrarMelhorRota {
 
     private final Configuracao configuracao;
     private final List<CriterioParada> criteriosParadas;
+    private final Mundo mundo;
 
     private final FuncaoCruzamento funcaoCruzamento;
     private final FuncaoPopulacaoInicial funcaoPopulacaoInicial;
-
 
     @Setter(value = AccessLevel.NONE)
     private final List<Geracao> geracoes;
 
     public Cromossomo encontrar() {
         //obtém a primeira geração
-        geracoes.add(funcaoPopulacaoInicial.gerarPopulacaoInicial());
+        geracoes.add(funcaoPopulacaoInicial.gerarPopulacaoInicial(mundo));
 
         //chama o callback de todos os critérios de parada para indicar que o algoritmo iniciou
         criteriosParadas.forEach(CriterioParada::callbackInicio);

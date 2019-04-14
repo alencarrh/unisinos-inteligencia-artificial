@@ -8,6 +8,6 @@ import lombok.Data;
 public class Geracao {
 
     private final Populacao populacao;
-    private final Cromossomo melhorCromossomo;
+    private Cromossomo melhorCromossomo;
 
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
+import unisinos.inteligencia.artificial.ga.domain.Mundo;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioNumeroMaximoGeracoes;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioParada;
@@ -16,12 +17,20 @@ import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao.FuncaoMutac
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.populacao.FuncaoPopulacaoInicial;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoCompletamenteAleatoria;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoManterMelhores;
+import unisinos.inteligencia.artificial.ga.instancia.LeitorInstancia;
 import unisinos.inteligencia.artificial.ga.roteamento.EncontrarMelhorRota;
 
 public class ApplicationMain {
 
 
     public static void main(String[] args) {
+        final Mundo munndo = LeitorInstancia.carregarInstancia("nome_do_arquivo");
+
+
+
+
+
+
         final List<Configuracao> configuracoes = randomConfigurations();
         final Map<Configuracao, Cromossomo> melhoresCromossomos = new HashMap<>();
 

@@ -8,9 +8,9 @@ import lombok.Singular;
 
 @Data
 @Builder
-public class Rota {
+public class RotaCidade {
 
-    @Singular
-    private final List<RotaCidade> cidades;
+    private final Cidade cidade;
+    private final Integer quantidade;
 
 }
