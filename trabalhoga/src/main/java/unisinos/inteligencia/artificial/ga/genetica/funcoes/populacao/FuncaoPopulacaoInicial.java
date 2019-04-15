@@ -24,43 +24,17 @@ public class FuncaoPopulacaoInicial {
 
     public Geracao gerarPopulacaoInicial(final Mundo mundo) {
         final List<Cromossomo> cromossomos = new ArrayList<>();
+        final int tamanhoPopulacaoInicial = configuracao.getPopulacaoInicial() / 3;
 
         sortByDemanda(mundo.getCidades());
-        final Cromossomo cromossomoBase1 = criarCromossomo(
-            mundo.getDeposito(),
-            mundo.getCidades(),
-            mundo.getCapacidadeCaminhao(),
-            configuracao.getNumeroVeiculos());
+        shiftRightAndAddTo(mundo, cromossomos, tamanhoPopulacaoInicial);
 
         sortByDistanceFrom(mundo.getCidades(), mundo.getDeposito());
-        final Cromossomo cromossomoBase2 = criarCromossomo(
-            mundo.getDeposito(),
-            mundo.getCidades(),
-            mundo.getCapacidadeCaminhao(),
-            configuracao.getNumeroVeiculos());
+        shiftRightAndAddTo(mundo, cromossomos, tamanhoPopulacaoInicial);
 
         shuffle(mundo.getCidades());
-        final Cromossomo cromossomoBase3 = criarCromossomo(
-            mundo.getDeposito(),
-            mundo.getCidades(),
-            mundo.getCapacidadeCaminhao(),
-            configuracao.getNumeroVeiculos());
+        shiftRightAndAddTo(mundo, cromossomos, tamanhoPopulacaoInicial);
 
-        cromossomos.add(cromossomoBase1);
-        cromossomos.add(cromossomoBase2);
-        cromossomos.add(cromossomoBase3);
-
-        for (int i = 0; i < configuracao.getPopulacaoInicial()-3; i++) {
-            shiftRight(mundo.getCidades());
-            final Cromossomo cromossomo = criarCromossomo(
-                mundo.getDeposito(),
-                mundo.getCidades(),
-                mundo.getCapacidadeCaminhao(),
-                configuracao.getNumeroVeiculos());
-
-            cromossomos.add(cromossomo);
-
-        }
 
         //1. vizinhos -> reordenar a rota do próprio caminhão
         //2. mutação -> pode pegar a rota de dois caminhos e trocar as cidades que tem o mesmo custo
@@ -69,6 +43,21 @@ public class FuncaoPopulacaoInicial {
         return Geracao.builder().populacao(Populacao.builder().cromossomos(cromossomos).build()).build();
     }
 
+
+    private void shiftRightAndAddTo(final Mundo mundo, final List<Cromossomo> cromossomos, int timesToShift){
+        int times = Math.min(timesToShift, mundo.getCidades().size()-1);
+
+        for (int i = 0; i < times; i++) {
+            final Cromossomo cromossomo = criarCromossomo(
+                mundo.getDeposito(),
+                mundo.getCidades(),
+                mundo.getCapacidadeCaminhao(),
+                configuracao.getNumeroVeiculos());
+
+            shiftRight(mundo.getCidades());
+            cromossomos.add(cromossomo);
+        }
+    }
 
     private Cromossomo criarCromossomo(
         final Cidade deposito, final List<Cidade> cidades,
@@ -80,7 +69,7 @@ public class FuncaoPopulacaoInicial {
         int cidadeAtual = 0;
         int demandaRestanteCidadeAtual = cidades.get(cidadeAtual).getDemanda();
 
-        for (int i = 0; i < numeroVeiculos; i++) {
+        for (int i = 0; i < numeroVeiculos && cidadeAtual < cidades.size(); i++) {
             int produtoNoVeiculo = capacidadeVeiculo;
             Cidade cidade = cidades.get(cidadeAtual);
             rota = Rota.builder();
@@ -100,13 +89,13 @@ public class FuncaoPopulacaoInicial {
                 if (demandaRestanteCidadeAtual <= 0) {
                     cidadeAtual++;
                     if (cidadeAtual >= cidades.size()) {
-                        return cromossomo.build();
+                        break;
                     }
                     cidade = cidades.get(cidadeAtual);
                     demandaRestanteCidadeAtual = cidade.getDemanda();
                 }
 
-            } while (produtoNoVeiculo > 0);
+            } while (produtoNoVeiculo > 0 && cidadeAtual < cidades.size());
 
             //termina no depósito
             rota.cidade(criarRotaCidade(deposito, 0));
