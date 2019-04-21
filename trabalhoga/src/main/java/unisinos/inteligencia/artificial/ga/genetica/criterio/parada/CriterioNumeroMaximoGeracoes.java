@@ -5,9 +5,11 @@ import unisinos.inteligencia.artificial.ga.genetica.Populacao;
 
 public class CriterioNumeroMaximoGeracoes implements CriterioParada {
 
+    private Integer geracao;
+
     @Override
-    public boolean objetivoAlcancado(final Configuracao configuracao, final ParametrosRoteamento parametrosRoteamento,
-        final Populacao populacao) {
-        return false;
+    public boolean objetivoAlcancado(final Configuracao configuracao, final Populacao populacao) {
+        geracao++;
+        return geracao >= configuracao.getNumeroMaximoGeracoes();
     }
 }

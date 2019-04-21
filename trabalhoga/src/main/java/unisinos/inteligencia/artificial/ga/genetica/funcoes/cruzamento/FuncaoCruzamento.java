@@ -1,15 +1,16 @@
 package unisinos.inteligencia.artificial.ga.genetica.funcoes.cruzamento;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.Builder;
 import lombok.Singular;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import unisinos.inteligencia.artificial.ga.genetica.Selecao;
+import unisinos.inteligencia.artificial.ga.config.Configuracao;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.Populacao;
+import unisinos.inteligencia.artificial.ga.genetica.Selecao;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao.FuncaoMutacao;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecao;
 
@@ -19,6 +20,7 @@ public class FuncaoCruzamento {
     @Singular("funcaoSelecao")
     private final List<FuncaoSelecao> funcoesSelecao;
     private final FuncaoMutacao funcaoMutacao;
+    private final Configuracao configuracao;
 
     public Populacao cruzarPopulacao(final Populacao populacao) {
         final List<Cromossomo> novaGeracao = new ArrayList<>();
@@ -40,6 +42,7 @@ public class FuncaoCruzamento {
     private List<Cromossomo> cruzarSelecao(final List<Selecao> selecao) {
         return selecao.stream()
             .map(this::cruzar)
+            .flatMap(List::stream)
             .collect(Collectors.toList());
     }
 
@@ -49,24 +52,31 @@ public class FuncaoCruzamento {
      * @param selecao Selecao de cromossomos para cruzamento.
      * @return Retorna o resultado do cruzamento (filho) dos cromossomos selecionados
      */
-    private Cromossomo cruzar(final Selecao selecao) {
+    private List<Cromossomo> cruzar(final Selecao selecao) {
         if (selecao.getCromossomos().size() == 1) {
             //neste caso, é um dos melhores da geração, então somente mantemos este.
-            return selecao.getCromossomos().get(0);
+            return Collections.singletonList(selecao.getCromossomos().get(0));
         }
 
-        // 1. faz o cruzamento entre os dois(ou N) cromossomos
+        List<Cromossomo> cromossomosFilhos = new ArrayList<>();
 
-        //dividir pelo numero de cidades
-            // -> ordenar e deixar 50% das cidades do pai e 50% das cidades da mae
+        final Cromossomo pai = selecao.getCromossomos().get(0);
+        final Cromossomo mae = selecao.getCromossomos().get(1);
+
+        cromossomosFilhos.add(cruzar(pai, mae));
+        cromossomosFilhos.add(cruzar(mae, pai));
+
+        return cromossomosFilhos;
+    }
+
+    private Cromossomo cruzar(final Cromossomo pai, final Cromossomo mae) {
 
 
-        // 2. aplica a função de mutação
+
         funcaoMutacao.aplicarMucatacao(null);
 
-        //3. retorna o cromossomo
         //TODO
-        throw new NotImplementedException();
+        return Cromossomo.builder().build();
     }
 
 }

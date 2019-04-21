@@ -30,27 +30,29 @@ public class EncontrarMelhorRota {
     private final List<Geracao> geracoes;
 
     public Cromossomo encontrar() {
-        //obtém a primeira geração
         geracoes.add(funcaoPopulacaoInicial.gerarPopulacaoInicial(mundo));
-
-        //chama o callback de todos os critérios de parada para indicar que o algoritmo iniciou
         criteriosParadas.forEach(CriterioParada::callbackInicio);
 
-        //este loop somente para quando um dos criterios de parada é atigindo
         while (true) {
+            final Populacao novaGeracao = funcaoCruzamento.cruzarPopulacao(ultimaPopulacao());
+            final Cromossomo melhorCromossomo = novaGeracao.getCromossomos().stream().sorted().findFirst().get();
 
-            final Populacao novoGeracao = funcaoCruzamento.cruzarPopulacao(ultimaGeracao().getPopulacao());
+            geracoes.add(Geracao.builder().populacao(novaGeracao).melhorCromossomo(melhorCromossomo).build());
 
-            if (true) { //verificar os criterios de parada para saber quando parar
+            boolean deveParar = criteriosParadas.stream()
+                .anyMatch(criterio -> criterio.objetivoAlcancado(configuracao, ultimaPopulacao()));
+
+            if (deveParar) {
                 break;
             }
         }
-
-        //chama o callback de todos os critérios de parada para indicar que o algoritmo finalizou
         criteriosParadas.forEach(CriterioParada::callbackFim);
 
-        //TODO determinar retorno
-        return null;
+        return ultimaGeracao().getMelhorCromossomo();
+    }
+
+    private Populacao ultimaPopulacao() {
+        return ultimaGeracao().getPopulacao();
     }
 
     private Geracao ultimaGeracao() {

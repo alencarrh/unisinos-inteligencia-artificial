@@ -8,10 +8,9 @@ import lombok.Data;
 public class Configuracao {
 
     /**
-     * Probabilidade de ocorrer uma mutação no momento da repodução de dois cromossomos. <br> 1.0F representa 100% e
-     * 0.0F representa 0%;
+     * Probabilidade de ocorrer uma mutação no momento da repodução de dois cromossomos. Intervalo de 0% a 100%.
      */
-    private final Float fatorMutacao;
+    private final Integer fatorMutacao;
 
     /**
      * Tamanho da população inicial (número de cromossomos)
@@ -21,11 +20,19 @@ public class Configuracao {
     /**
      * Número máximo de gerações
      */
-    private final Integer numeroGeracoes;
+    private final Integer numeroMaximoGeracoes;
 
     /**
      * Número de veículos disponíveis para entregas
      */
     private final Integer numeroVeiculos;
+
+    /**
+     * Quantidade de produtos que o veículo consegue transportar
+     */
+    private final Integer capacidadeCaminhao;
+
+    private final Integer qtdMelhoresManter;
+    private final Integer qtdPioresManter;
 
 }

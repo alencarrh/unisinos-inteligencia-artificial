@@ -35,11 +35,6 @@ public class FuncaoPopulacaoInicial {
         shuffle(mundo.getCidades());
         shiftRightAndAddTo(mundo, cromossomos, tamanhoPopulacaoInicial);
 
-
-        //1. vizinhos -> reordenar a rota do próprio caminhão
-        //2. mutação -> pode pegar a rota de dois caminhos e trocar as cidades que tem o mesmo custo
-        //3.
-
         return Geracao.builder().populacao(Populacao.builder().cromossomos(cromossomos).build()).build();
     }
 

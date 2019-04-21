@@ -14,10 +14,7 @@ public class Mundo {
     private final Cidade deposito;
     private final List<Cidade> cidades;
 
-    /**
-     * Quantidade de produtos que o veículo consegue transportar
-     */
-    private final Integer capacidadeCaminhao;
+
 
 
 }

@@ -17,6 +17,7 @@ import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao.FuncaoMutac
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.populacao.FuncaoPopulacaoInicial;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoCompletamenteAleatoria;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoManterMelhores;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoManterPiores;
 import unisinos.inteligencia.artificial.ga.instancia.LeitorInstancia;
 import unisinos.inteligencia.artificial.ga.roteamento.EncontrarMelhorRota;
 
@@ -24,12 +25,7 @@ public class ApplicationMain {
 
 
     public static void main(String[] args) {
-        final Mundo munndo = LeitorInstancia.carregarInstancia("nome_do_arquivo");
-
-
-
-
-
+        final Mundo mundo = LeitorInstancia.carregarInstancia("nome_do_arquivo");
 
         final List<Configuracao> configuracoes = randomConfigurations();
         final Map<Configuracao, Cromossomo> melhoresCromossomos = new HashMap<>();
@@ -58,17 +54,15 @@ public class ApplicationMain {
 
     private static FuncaoCruzamento funcaoCruzamento(final Configuracao configuracao) {
         return FuncaoCruzamento.builder()
+            .configuracao(configuracao)
             .funcaoMutacao(FuncaoMutacao.builder().configuracao(configuracao).build())
-
-            //ou qualquer outra função de seleção. ex: FuncaoSelecaoSempreMelhores.
             .funcaoSelecao(new FuncaoSelecaoCompletamenteAleatoria())
-            .funcaoSelecao(new FuncaoSelecaoManterMelhores(10))
+            .funcaoSelecao(new FuncaoSelecaoManterMelhores(configuracao.getQtdMelhoresManter()))
+            .funcaoSelecao(new FuncaoSelecaoManterPiores(configuracao.getQtdPioresManter()))
             .build();
     }
 
-
     private static List<CriterioParada> criteriosParada() {
-        //TODO revisar
         return asList(new CriterioNumeroMaximoGeracoes());
     }
 
