@@ -1,13 +1,13 @@
-package unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao;
+package unisinos.inteligencia.artificial.ga.genetica.funcoes.mutacao;
 
 import static java.util.Collections.shuffle;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import lombok.Builder;
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
+import unisinos.inteligencia.artificial.ga.domain.Cidade;
 import unisinos.inteligencia.artificial.ga.domain.Rota;
 import unisinos.inteligencia.artificial.ga.domain.RotaCidade;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
@@ -52,7 +52,12 @@ public class FuncaoMutacao {
         int i = ThreadLocalRandom.current().nextInt(0, cromossomo.getRotas().size());
         Rota rota = cromossomo.getRotas().get(i);
         rota.setCidades(new ArrayList<>(rota.getCidades()));
+        RotaCidade depositoInicio = rota.getCidades().remove(0);
+        RotaCidade depositoFinal = rota.getCidades().remove(rota.getCidades().size() - 1);
         shuffle(rota.getCidades());
+
+        rota.getCidades().add(0, depositoInicio);
+        rota.getCidades().add(depositoFinal);
     }
 
 //    private void adicionaVeiculoSePossivel(final Cromossomo cromossomo) {

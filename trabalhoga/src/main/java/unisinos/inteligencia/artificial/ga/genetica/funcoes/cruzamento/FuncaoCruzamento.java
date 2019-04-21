@@ -11,7 +11,7 @@ import unisinos.inteligencia.artificial.ga.config.Configuracao;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.Populacao;
 import unisinos.inteligencia.artificial.ga.genetica.Selecao;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao.FuncaoMutacao;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutacao.FuncaoMutacao;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecao;
 
 @Builder

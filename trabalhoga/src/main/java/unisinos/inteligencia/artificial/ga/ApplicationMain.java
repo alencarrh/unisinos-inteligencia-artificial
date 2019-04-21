@@ -3,15 +3,12 @@ package unisinos.inteligencia.artificial.ga;
 import static java.util.Collections.reverseOrder;
 import static java.util.Collections.singletonList;
 
-import java.awt.geom.RectangularShape;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalDouble;
 
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
 import unisinos.inteligencia.artificial.ga.config.ConfiguracaoGerador;
@@ -22,7 +19,7 @@ import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioNumeroMaximoGeracoes;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioParada;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.cruzamento.FuncaoCruzamento;
-import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutuacao.FuncaoMutacao;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutacao.FuncaoMutacao;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.populacao.FuncaoPopulacaoInicial;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoCompletamenteAleatoria;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.selecao.FuncaoSelecaoManterMelhores;
@@ -35,12 +32,13 @@ public class ApplicationMain {
 
     public static void main(String[] args) throws IOException {
         final String[] files = {"./instancias/eil33.vrp", "./instancias/att48.vrp", "./instancias/eilc76.vrp"};
+        int repeticaoComMesmoExecucao = 30;
+        int configs = 50;
 
         for (final String filename : files) {
             final Mundo mundo = LeitorInstancia.carregarInstancia(filename + ".txt");
-            ConfiguracaoGerador configuracaoGerador = new ConfiguracaoGerador(mundo, 100);
+            ConfiguracaoGerador configuracaoGerador = new ConfiguracaoGerador(mundo, configs);
 
-            int repeticaoComMesmoExecucao = 30;
             final Map<Configuracao, List<Cromossomo>> melhoresCromossomos = new HashMap<>();
             int a = 0;
             while (configuracaoGerador.hasNext()) {
@@ -87,6 +85,8 @@ public class ApplicationMain {
 
             });
 
+            resultados.sort((resultado1, resultado2) -> resultado1.getMelhor().compareTo(resultado2.getMelhor()));
+
             CsvBuilder<Resultado> csvBuilder = new CsvBuilder<>();
 
             String result = csvBuilder
@@ -113,7 +113,8 @@ public class ApplicationMain {
                 .column(resultado -> resultado.getPior().getRotas())
                 .toString();
 
-            PrintWriter out = new PrintWriter(filename + ".result.txt");
+            PrintWriter out = new PrintWriter(
+                filename + "_" + repeticaoComMesmoExecucao + "repeticao_" + configs + "configs" + ".result.csv");
             out.println(result);
             out.close();
 
