@@ -22,7 +22,7 @@ public class FuncaoAptidao {
         return distanciaPercorridaTodosCaminhoes * -1;
     }
 
-    private Double calcularDistancia(final List<RotaCidade> caminho) {
+    public Double calcularDistancia(final List<RotaCidade> caminho) {
         double distanciaTotal = 0;
 
         for (int i = 0; i < caminho.size() - 1; i++) {

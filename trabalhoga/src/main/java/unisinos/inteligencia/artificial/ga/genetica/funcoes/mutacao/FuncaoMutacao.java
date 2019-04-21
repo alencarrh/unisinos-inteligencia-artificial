@@ -1,21 +1,26 @@
 package unisinos.inteligencia.artificial.ga.genetica.funcoes.mutacao;
 
+import static java.util.Collections.reverse;
 import static java.util.Collections.shuffle;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import lombok.Builder;
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
-import unisinos.inteligencia.artificial.ga.domain.Cidade;
 import unisinos.inteligencia.artificial.ga.domain.Rota;
 import unisinos.inteligencia.artificial.ga.domain.RotaCidade;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.aptidao.FuncaoAptidao;
 
 @Builder
 public class FuncaoMutacao {
 
     private final Configuracao configuracao;
+    private final FuncaoAptidao funcaoAptidao;
 
     /**
      * Função responsável por aplicar a mutação em um cromossomo. A mutação acontece conforme sua probabilidade de
@@ -30,18 +35,16 @@ public class FuncaoMutacao {
             return;
         }
 
-        int option = ThreadLocalRandom.current().nextInt(0, 2);
+        int option = ThreadLocalRandom.current().nextInt(0, 100);
 
-//        switch (option) {
-//            case 1:
         int qtd = ThreadLocalRandom.current().nextInt(0, 3);
         for (int j = 0; j < qtd; j++) {
             mutacaoOrdemRota(cromossomo);
         }
-//            case 2:
 
-//        }
-
+        if (option % 11 == 0) {
+            adicionaVeiculoSePossivel(cromossomo);
+        }
     }
 
 
@@ -60,29 +63,41 @@ public class FuncaoMutacao {
         rota.getCidades().add(depositoFinal);
     }
 
-//    private void adicionaVeiculoSePossivel(final Cromossomo cromossomo) {
-//
-//        if (configuracao.getNumeroVeiculos() <= cromossomo.getRotas().size()) {
+    private void adicionaVeiculoSePossivel(final Cromossomo cromossomo) {
+
+        if (configuracao.getNumeroVeiculos() <= cromossomo.getRotas().size()) {
 //            já está sendo utilizado o número máximo de veiculos
-//            mutacaoOrdemRota(cromossomo);
-//            return;
-//        }
-//
-//        final List<Rota> rotas = new ArrayList<>();
-//
+            mutacaoOrdemRota(cromossomo);
+            return;
+        }
+
 //         ordena rotas pelas menores entregas
-//        for (int i = 0; i < cromossomo.getRotas().size(); i++) {
-//            final Rota rota = cromossomo.getRotas().get(i);
-//
-//            rota.getCidades().sort((cidade1, cidade2) -> {});
-//
-//            for (int j = 0; j < rota.getCidades().size(); j++) {
-//
-//            }
-//
-//
-//        }
-//
-//    }
+
+        List<Rota> rotas = cromossomo.getRotas().stream()
+            .sorted(Comparator.comparing(rota -> funcaoAptidao.calcularDistancia(rota.getCidades())))
+            .collect(Collectors.toList());
+
+        reverse(rotas);
+
+        int produtosNoVeiculo = configuracao.getCapacidadeCaminhao();
+
+        Rota.RotaBuilder rotaBuilder = Rota.builder();
+        for (final Rota rota : rotas) {
+            rota.setCidades(new ArrayList<>(rota.getCidades()));
+            if (rota.getCidades().size() > 3) {
+                RotaCidade rotaCidade = rota.getCidades().remove(1);
+
+                if (produtosNoVeiculo - rotaCidade.getQuantidade() < 0) {
+                    break;
+                }
+                produtosNoVeiculo -= rotaCidade.getQuantidade();
+                rotaBuilder.cidade(rotaCidade);
+            }
+        }
+
+        rotas.add(rotaBuilder.build());
+        cromossomo.setRotas(rotas);
+    }
+
 
 }

@@ -6,6 +6,7 @@ import static java.util.Collections.singletonList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import unisinos.inteligencia.artificial.ga.domain.Resultado;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioNumeroMaximoGeracoes;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioParada;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.aptidao.FuncaoAptidao;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.cruzamento.FuncaoCruzamento;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.mutacao.FuncaoMutacao;
 import unisinos.inteligencia.artificial.ga.genetica.funcoes.populacao.FuncaoPopulacaoInicial;
@@ -85,7 +87,7 @@ public class ApplicationMain {
 
             });
 
-            resultados.sort((resultado1, resultado2) -> resultado1.getMelhor().compareTo(resultado2.getMelhor()));
+            resultados.sort(Comparator.comparing(Resultado::getMelhor));
 
             CsvBuilder<Resultado> csvBuilder = new CsvBuilder<>();
 
@@ -130,7 +132,10 @@ public class ApplicationMain {
     private static FuncaoCruzamento funcaoCruzamento(final Configuracao configuracao) {
         return FuncaoCruzamento.builder()
             .configuracao(configuracao)
-            .funcaoMutacao(FuncaoMutacao.builder().configuracao(configuracao).build())
+            .funcaoMutacao(
+                FuncaoMutacao.builder()
+                    .funcaoAptidao(new FuncaoAptidao())
+                    .configuracao(configuracao).build())
             .funcaoSelecao(new FuncaoSelecaoCompletamenteAleatoria())
             .funcaoSelecao(new FuncaoSelecaoManterMelhores(configuracao.getQtdMelhoresManter()))
             .funcaoSelecao(new FuncaoSelecaoManterPiores(configuracao.getQtdPioresManter()))

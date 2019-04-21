@@ -16,7 +16,7 @@ public class ConfiguracaoGerador {
             .capacidadeCaminhao(mundo.getCapacidadeCaminhao())
             .populacaoInicial(100)
             .numeroMaximoGeracoes(50)
-            .numeroVeiculos(8)
+            .numeroVeiculos(4)
             .qtdMelhoresManter(2)
             .qtdPioresManter(1)
             .fatorMutacao(1)
@@ -53,15 +53,20 @@ public class ConfiguracaoGerador {
             populacaoInicial = configuracao.getPopulacaoInicial() + 20;
         }
 
+        int numeroVeiculo = configuracao.getNumeroVeiculos();
+        Integer valorParaIncrementarVeiculo = (configuracao.getNumeroVeiculos() / 3) - 1;
+        if (configuracaoNumero.equals(valorParaIncrementarVeiculo)) {
+            numeroVeiculo++;
+        }
+
         configuracao = Configuracao.builder()
             .capacidadeCaminhao(configuracao.getCapacidadeCaminhao())
             .populacaoInicial(populacaoInicial)
             .numeroMaximoGeracoes(numeroMaximoGeracao)
-            .numeroVeiculos(configuracao.getNumeroVeiculos())
+            .numeroVeiculos(numeroVeiculo)
             .qtdMelhoresManter(configuracao.getQtdMelhoresManter())
             .qtdPioresManter(configuracao.getQtdPioresManter())
             .fatorMutacao(novoFator)
             .build();
     }
-
 }
