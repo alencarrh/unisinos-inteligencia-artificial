@@ -11,6 +11,6 @@ import lombok.Singular;
 public class Rota {
 
     @Singular
-    private final List<RotaCidade> cidades;
+    private List<RotaCidade> cidades;
 
 }

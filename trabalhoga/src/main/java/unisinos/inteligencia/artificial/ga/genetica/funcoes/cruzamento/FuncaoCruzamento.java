@@ -25,14 +25,13 @@ public class FuncaoCruzamento {
     public Populacao cruzarPopulacao(final Populacao populacao) {
         final List<Cromossomo> novaGeracao = new ArrayList<>();
 
-        funcoesSelecao.forEach(funcaoSelecao -> {
+        for (final FuncaoSelecao funcaoSelecao : funcoesSelecao) {
 
             List<Selecao> selecao = funcaoSelecao.selecionar(populacao);
             List<Cromossomo> filhos = cruzarSelecao(selecao);
 
             novaGeracao.addAll(filhos);
-
-        });
+        }
 
         return Populacao.builder()
             .cromossomos(novaGeracao)
@@ -70,13 +69,9 @@ public class FuncaoCruzamento {
     }
 
     private Cromossomo cruzar(final Cromossomo pai, final Cromossomo mae) {
-
-
-
-        funcaoMutacao.aplicarMucatacao(null);
-
+        funcaoMutacao.aplicarMucatacao(pai);
         //TODO
-        return Cromossomo.builder().build();
+        return pai;
     }
 
 }

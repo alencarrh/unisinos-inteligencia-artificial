@@ -1,13 +1,15 @@
 package unisinos.inteligencia.artificial.ga;
 
-import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import unisinos.inteligencia.artificial.ga.config.Configuracao;
+import unisinos.inteligencia.artificial.ga.config.ConfiguracaoGerador;
 import unisinos.inteligencia.artificial.ga.domain.Mundo;
 import unisinos.inteligencia.artificial.ga.genetica.Cromossomo;
 import unisinos.inteligencia.artificial.ga.genetica.criterio.parada.CriterioNumeroMaximoGeracoes;
@@ -24,28 +26,40 @@ import unisinos.inteligencia.artificial.ga.roteamento.EncontrarMelhorRota;
 public class ApplicationMain {
 
 
-    public static void main(String[] args) {
-        final Mundo mundo = LeitorInstancia.carregarInstancia("nome_do_arquivo");
+    public static void main(String[] args) throws IOException {
+        final Mundo mundo = LeitorInstancia.carregarInstancia("./instancias/att48.vrp.txt");
+        ConfiguracaoGerador configuracaoGerador = new ConfiguracaoGerador(mundo, 50);
 
-        final List<Configuracao> configuracoes = randomConfigurations();
-        final Map<Configuracao, Cromossomo> melhoresCromossomos = new HashMap<>();
+        final Map<Configuracao, List<Cromossomo>> melhoresCromossomos = new HashMap<>();
 
-        configuracoes.forEach(configuracao -> {
+        while (configuracaoGerador.hasNext()) {
+            final Configuracao configuracao = configuracaoGerador.next();
 
-            final EncontrarMelhorRota encontrarMelhorRota = EncontrarMelhorRota.builder()
-                .configuracao(configuracao)
-                .funcaoCruzamento(funcaoCruzamento(configuracao))
-                .funcaoPopulacaoInicial(funcaoPopulacaoInicial(configuracao))
-                .criteriosParadas(criteriosParada())
-                .build();
+            for (int i = 0; i < 30; i++) {
 
-            final Cromossomo melhorRota = encontrarMelhorRota.encontrar();
+                final EncontrarMelhorRota encontrarMelhorRota = EncontrarMelhorRota.builder()
+                    .mundo(mundo)
+                    .configuracao(configuracao)
+                    .funcaoCruzamento(funcaoCruzamento(configuracao))
+                    .funcaoPopulacaoInicial(funcaoPopulacaoInicial(configuracao))
+                    .criteriosParadas(criteriosParada())
+                    .build();
 
-            melhoresCromossomos.put(configuracao, melhorRota);
+                final Cromossomo melhorRota = encontrarMelhorRota.encontrar();
 
-        });
+                List<Cromossomo> cromossomos = melhoresCromossomos.getOrDefault(configuracao, new ArrayList<>());
+                cromossomos.add(melhorRota);
+                melhoresCromossomos.put(configuracao, cromossomos);
+
+            }
+        }
 
         System.out.println(melhoresCromossomos);
+
+
+
+
+
     }
 
     private static FuncaoPopulacaoInicial funcaoPopulacaoInicial(final Configuracao configuracao) {
@@ -63,12 +77,7 @@ public class ApplicationMain {
     }
 
     private static List<CriterioParada> criteriosParada() {
-        return asList(new CriterioNumeroMaximoGeracoes());
-    }
-
-    private static List<Configuracao> randomConfigurations() {
-        //TODO
-        throw new NotImplementedException();
+        return singletonList(new CriterioNumeroMaximoGeracoes());
     }
 
 }

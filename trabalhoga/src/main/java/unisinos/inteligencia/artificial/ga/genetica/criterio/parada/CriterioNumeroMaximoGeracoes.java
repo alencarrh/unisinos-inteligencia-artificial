@@ -5,7 +5,7 @@ import unisinos.inteligencia.artificial.ga.genetica.Populacao;
 
 public class CriterioNumeroMaximoGeracoes implements CriterioParada {
 
-    private Integer geracao;
+    private Integer geracao = 0;
 
     @Override
     public boolean objetivoAlcancado(final Configuracao configuracao, final Populacao populacao) {

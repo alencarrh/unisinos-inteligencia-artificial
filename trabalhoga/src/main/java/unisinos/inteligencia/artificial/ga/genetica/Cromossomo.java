@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 import unisinos.inteligencia.artificial.ga.domain.Rota;
+import unisinos.inteligencia.artificial.ga.genetica.funcoes.aptidao.FuncaoAptidao;
 
 @Data
 @Builder
@@ -21,5 +22,12 @@ public class Cromossomo implements Comparable<Cromossomo> {
     @Override
     public int compareTo(final Cromossomo other) {
         return getAptidao().compareTo(other.getAptidao());
+    }
+
+    public Double getAptidao() {
+        if (aptidao == null) {
+            new FuncaoAptidao().calcular(this);
+        }
+        return aptidao;
     }
 }

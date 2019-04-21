@@ -20,11 +20,11 @@ import unisinos.inteligencia.artificial.ga.genetica.Populacao;
 public class FuncaoPopulacaoInicial {
 
 
-    private final Configuracao configuracao;
+    private Configuracao configuracao;
 
-    public Geracao gerarPopulacaoInicial(final Mundo mundo) {
-        final List<Cromossomo> cromossomos = new ArrayList<>();
-        final int tamanhoPopulacaoInicial = configuracao.getPopulacaoInicial() / 3;
+    public Geracao gerarPopulacaoInicial(Mundo mundo) {
+        List<Cromossomo> cromossomos = new ArrayList<>();
+        int tamanhoPopulacaoInicial = configuracao.getPopulacaoInicial() / 3;
 
         sortByDemanda(mundo.getCidades());
         shiftRightAndAddTo(mundo, cromossomos, tamanhoPopulacaoInicial);
@@ -39,11 +39,11 @@ public class FuncaoPopulacaoInicial {
     }
 
 
-    private void shiftRightAndAddTo(final Mundo mundo, final List<Cromossomo> cromossomos, int timesToShift){
-        int times = Math.min(timesToShift, mundo.getCidades().size()-1);
+    private void shiftRightAndAddTo(Mundo mundo, List<Cromossomo> cromossomos, int timesToShift) {
+        int times = Math.min(timesToShift, mundo.getCidades().size() - 1);
 
         for (int i = 0; i < times; i++) {
-            final Cromossomo cromossomo = criarCromossomo(
+            Cromossomo cromossomo = criarCromossomo(
                 mundo.getDeposito(),
                 mundo.getCidades(),
                 mundo.getCapacidadeCaminhao(),
@@ -55,10 +55,10 @@ public class FuncaoPopulacaoInicial {
     }
 
     private Cromossomo criarCromossomo(
-        final Cidade deposito, final List<Cidade> cidades,
-        final Integer capacidadeVeiculo, final Integer numeroVeiculos) {
+        Cidade deposito, List<Cidade> cidades,
+        Integer capacidadeVeiculo, Integer numeroVeiculos) {
 
-        final Cromossomo.CromossomoBuilder cromossomo = Cromossomo.builder();
+        Cromossomo.CromossomoBuilder cromossomo = Cromossomo.builder();
         Rota.RotaBuilder rota;
 
         int cidadeAtual = 0;
@@ -101,24 +101,24 @@ public class FuncaoPopulacaoInicial {
         return cromossomo.build();
     }
 
-    private void shiftRight(final List<Cidade> cidades) {
+    private void shiftRight(List<Cidade> cidades) {
         //remove o último adicionando ele na primeiro posição (faz com que os demais sejam movidos 1 posição a direita)
         cidades.add(0, cidades.remove(cidades.size() - 1));
     }
 
 
-    private RotaCidade criarRotaCidade(final Cidade cidade, final Integer quantidade) {
+    private RotaCidade criarRotaCidade(Cidade cidade, Integer quantidade) {
         return RotaCidade.builder()
             .cidade(cidade)
             .quantidade(quantidade)
             .build();
     }
 
-    private void sortByDemanda(final List<Cidade> cidades) {
+    private void sortByDemanda(List<Cidade> cidades) {
         cidades.sort(Comparator.comparing(Cidade::getDemanda));
     }
 
-    private void sortByDistanceFrom(final List<Cidade> cidades, final Cidade cidadeReferencia) {
+    private void sortByDistanceFrom(List<Cidade> cidades, Cidade cidadeReferencia) {
         cidades.sort(Comparator.comparing(cidade -> cidade.distanciaDe(cidadeReferencia)));
     }
 }

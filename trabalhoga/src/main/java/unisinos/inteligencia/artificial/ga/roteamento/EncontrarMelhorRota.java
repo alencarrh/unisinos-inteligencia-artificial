@@ -1,5 +1,6 @@
 package unisinos.inteligencia.artificial.ga.roteamento;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AccessLevel;
@@ -27,9 +28,12 @@ public class EncontrarMelhorRota {
     private final FuncaoPopulacaoInicial funcaoPopulacaoInicial;
 
     @Setter(value = AccessLevel.NONE)
-    private final List<Geracao> geracoes;
+    private List<Geracao> geracoes;
 
     public Cromossomo encontrar() {
+        if(geracoes == null){
+            geracoes = new ArrayList<>();
+        }
         geracoes.add(funcaoPopulacaoInicial.gerarPopulacaoInicial(mundo));
         criteriosParadas.forEach(CriterioParada::callbackInicio);
 

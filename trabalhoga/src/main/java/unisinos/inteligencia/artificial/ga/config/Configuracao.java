@@ -10,29 +10,29 @@ public class Configuracao {
     /**
      * Probabilidade de ocorrer uma mutação no momento da repodução de dois cromossomos. Intervalo de 0% a 100%.
      */
-    private final Integer fatorMutacao;
+    private Integer fatorMutacao = 1;
 
     /**
      * Tamanho da população inicial (número de cromossomos)
      */
-    private final Integer populacaoInicial;
+    private Integer populacaoInicial = 200;
 
     /**
      * Número máximo de gerações
      */
-    private final Integer numeroMaximoGeracoes;
+    private Integer numeroMaximoGeracoes = 100;
 
     /**
      * Número de veículos disponíveis para entregas
      */
-    private final Integer numeroVeiculos;
+    private Integer numeroVeiculos = 10;
 
     /**
      * Quantidade de produtos que o veículo consegue transportar
      */
-    private final Integer capacidadeCaminhao;
+    private Integer capacidadeCaminhao;
 
-    private final Integer qtdMelhoresManter;
-    private final Integer qtdPioresManter;
+    private Integer qtdMelhoresManter = 2;
+    private Integer qtdPioresManter = 1;
 
 }
