@@ -12,7 +12,7 @@ import lombok.ToString;
 @Data
 @Builder
 @AllArgsConstructor
-@ToString(exclude = "vizinhos")
+@ToString(exclude = {"vizinhos", "posicao", "nome"})
 @EqualsAndHashCode(of = "id")
 public class Cidade {
 

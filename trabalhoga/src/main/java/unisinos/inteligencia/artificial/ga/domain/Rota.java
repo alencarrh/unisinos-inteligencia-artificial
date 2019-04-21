@@ -13,4 +13,8 @@ public class Rota {
     @Singular
     private List<RotaCidade> cidades;
 
+    @Override
+    public String toString() {
+        return cidades.toString();
+    }
 }

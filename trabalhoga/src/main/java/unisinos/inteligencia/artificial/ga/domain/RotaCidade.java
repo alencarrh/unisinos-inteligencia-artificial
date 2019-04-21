@@ -10,4 +10,8 @@ public class RotaCidade {
     private Cidade cidade;
     private Integer quantidade;
 
+    @Override
+    public String toString() {
+        return quantidade + "->" + cidade.getId();
+    }
 }

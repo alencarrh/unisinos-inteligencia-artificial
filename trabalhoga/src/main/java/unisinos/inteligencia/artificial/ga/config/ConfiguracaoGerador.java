@@ -29,13 +29,14 @@ public class ConfiguracaoGerador {
 
     public Configuracao next() {
         atualizarConfiguracao();
+        atualizarConfiguracao();
 
         configuracaoNumero++;
         return configuracao;
     }
 
     private void atualizarConfiguracao() {
-        int config = ThreadLocalRandom.current().nextInt(0, 6);
+        int config = ThreadLocalRandom.current().nextInt(0, 5);
         switch (config) {
             case 0:
                 int novoFator = (configuracao.getFatorMutacao() + 5) % 101;
@@ -44,16 +45,16 @@ public class ConfiguracaoGerador {
                 }
                 configuracao.setFatorMutacao(novoFator);
                 break;
-            case 2:
+            case 1:
                 configuracao.setNumeroMaximoGeracoes(configuracao.getNumeroMaximoGeracoes() + 10);
                 break;
-            case 3:
+            case 2:
                 configuracao.setPopulacaoInicial(configuracao.getPopulacaoInicial() + 20);
                 break;
-            case 4:
+            case 3:
                 configuracao.setQtdMelhoresManter(configuracao.getQtdMelhoresManter() + 5);
                 break;
-            case 5:
+            case 4:
                 configuracao.setQtdPioresManter(configuracao.getQtdPioresManter() + 5);
                 break;
         }

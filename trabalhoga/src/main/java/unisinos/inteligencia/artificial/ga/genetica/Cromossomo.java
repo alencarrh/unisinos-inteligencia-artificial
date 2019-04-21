@@ -30,4 +30,5 @@ public class Cromossomo implements Comparable<Cromossomo> {
         }
         return aptidao;
     }
+
 }
