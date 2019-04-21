@@ -38,7 +38,7 @@ public class ApplicationMain {
 
         for (final String filename : files) {
             final Mundo mundo = LeitorInstancia.carregarInstancia(filename + ".txt");
-            ConfiguracaoGerador configuracaoGerador = new ConfiguracaoGerador(mundo, 50);
+            ConfiguracaoGerador configuracaoGerador = new ConfiguracaoGerador(mundo, 100);
 
             int repeticaoComMesmoExecucao = 30;
             final Map<Configuracao, List<Cromossomo>> melhoresCromossomos = new HashMap<>();
