@@ -1,0 +1,75 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+import json
+
+import configurations
+import german_credit_risk
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+
+(x_train, y_train), (x_test, y_test) = german_credit_risk.load_data()
+
+results = []
+
+optimizers = configurations.optimizers()
+losses = configurations.losses()
+activations = configurations.activations()
+dropouts = configurations.dropouts()
+
+batch_size = 128
+epochs = 30
+
+for optimizer in optimizers:
+    for loss in losses:
+        for activation_layer_1 in activations:
+            for activation_layer_2 in activations:
+                for dropout in dropouts:
+                    result = {
+                        "optimizer": optimizer,
+                        "loss": loss,
+                        "activation_layer_1": activation_layer_1,
+                        "activation_layer_2": activation_layer_2,
+                        "dropout": dropout,
+                        "batch_size": batch_size,
+                        "epochs": epochs
+                    }
+
+                    try:
+                        model = Sequential()
+                        model.add(
+                            Dense(units=50,
+                                  activation=activation_layer_1,
+                                  input_dim=24,
+                                  kernel_initializer='glorot_normal',
+                                  bias_initializer='zeros'))
+                        model.add(Dropout(dropout))
+                        model.add(Dense(units=1,
+                                        activation=activation_layer_2,
+                                        kernel_initializer='glorot_normal',
+                                        bias_initializer='zeros'))
+
+                        model.compile(loss=loss,
+                                      optimizer=optimizer,
+                                      metrics=['accuracy'])
+
+                        history = model.fit(x_train.values, y_train.values,
+                                            validation_data=(x_test.values, y_test.values),
+                                            epochs=epochs,
+                                            batch_size=batch_size,
+                                            verbose=0)
+
+                        score = model.evaluate(x_test, y_test, batch_size=batch_size, verbose=0)
+
+                        result["history"] = history.history
+                        result["score"] = score
+                        print(result)
+                        results.append(result)
+                    except Exception as ex:
+                        print("ERROR - ", result)
+
+print(
+    json.dumps(results, indent=4, sort_keys=False, ensure_ascii=False),
+    file=open("results.json", mode='w', encoding="UTF-8"),
+    flush=True
+)
