@@ -2,11 +2,11 @@ def optimizers():
     return [
         "sgd",
         "rmsprop",
-        "adagrad",
-        "adadelta",
+        # "adagrad",
+        # "adadelta",
         "adam",
-        "adamax",
-        "nadam"
+        # "adamax",
+        # "nadam"
     ]
 
 
@@ -16,30 +16,30 @@ def losses():
         "MAE",
         "MAPE",
         "MSLE",
-        "squared_hinge",
-        "hinge",
-        "categorical_hinge",
-        "logcosh",
+        # "squared_hinge",
+        # "hinge",
+        # "categorical_hinge",
+        # "logcosh",
         "categorical_crossentropy",
         "sparse_categorical_crossentropy",
         "binary_crossentropy",
-        "kullback_leibler_divergence",
+        # "kullback_leibler_divergence",
         "poisson",
-        "cosine_proximity"
+        # "cosine_proximity"
     ]
 
 
 def activations():
     return [
         "softmax",
-        "elu",
-        "selu",
-        "softplus",
-        "softsign",
+        # "elu",
+        # "selu",
+        # "softplus",
+        # "softsign",
         "relu",
         "tanh",
-        "sigmoid",
-        "hard_sigmoid",
+        # "sigmoid",
+        # "hard_sigmoid",
         "exponential",
         "linear"
     ]
@@ -47,13 +47,7 @@ def activations():
 
 def dropouts():
     return [
-        0.2,
         0.3,
         0.35,
         0.4,
-        0.5,
-        0.5,
-        0.65,
-        0.7,
-        0.8
     ]
