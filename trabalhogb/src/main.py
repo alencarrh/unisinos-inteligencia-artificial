@@ -77,7 +77,7 @@ graphic2, ax2 = plt.subplots(1, figsize=(10, 10))
 # ordera pelo score
 results = sorted(results, key=lambda result: result["score"][1], reverse=True)
 
-for index, result in enumerate(results[:10]):
+for index, result in enumerate(results[:16]):
     key = ':'.join(
         [
             str(index),
@@ -93,11 +93,21 @@ for index, result in enumerate(results[:10]):
     ax1.plot(val_acc, label=key)
     ax2.plot(val_loss, label=key)
 
+# Shrink current axis's height by 10% on the bottom
+box = ax1.get_position()
+ax1.set_position([box.x0, box.y0 + box.height * 0.0, box.width, box.height * 1.0])
+ax1.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), fancybox=True, shadow=True, ncol=4)
+
+# Shrink current axis's height by 10% on the bottom
+box = ax2.get_position()
+ax2.set_position([box.x0, box.y0 + box.height * 0.0, box.width, box.height * 1.0])
+ax2.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), fancybox=True, shadow=True, ncol=4)
+
 ax1.set_ylabel('validation accuracy')
 ax1.set_xlabel('epochs')
 ax2.set_ylabel('validation loss')
 ax2.set_xlabel('epochs')
 
-ax1.legend()
-ax2.legend()
+# ax1.legend()
+# ax2.legend()
 plt.show()
