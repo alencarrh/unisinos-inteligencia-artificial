@@ -1,4 +1,6 @@
 import json
+import multiprocessing
+
 from multiprocessing.dummy import Pool as ThreadPool
 
 import graphics
@@ -6,7 +8,7 @@ import configurations
 import german_credit_risk
 import rnn
 
-THREAD_POOL_SIZE = 2
+THREAD_POOL_SIZE = int(multiprocessing.cpu_count() / 2)
 rnn.set_thread_size(THREAD_POOL_SIZE)
 
 # set data for the dataset

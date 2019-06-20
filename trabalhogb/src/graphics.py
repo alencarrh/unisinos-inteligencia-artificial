@@ -43,4 +43,11 @@ def create_graphics(results):
 
     # ax1.legend()
     # ax2.legend()
-    plt.show()
+    #plt.show()
+
+    graphic1.savefig("accuracy.png")
+    graphic2.savefig("loss.png")
+
+
+
+

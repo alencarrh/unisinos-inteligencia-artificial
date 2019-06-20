@@ -16,12 +16,12 @@ def losses():
         "MAE",
         "MAPE",
         "MSLE",
-        "squared_hinge",
-        "hinge",
-        "categorical_hinge",
-        "logcosh",
-        "categorical_crossentropy",
-        "sparse_categorical_crossentropy",
+        # "squared_hinge",
+        # "hinge",
+        # "categorical_hinge",
+        # "logcosh",
+        # "categorical_crossentropy", # removido por erro
+        # "sparse_categorical_crossentropy", # removido por erro
         "binary_crossentropy",
         "kullback_leibler_divergence",
         "poisson",
@@ -34,12 +34,12 @@ def activations():
         "softmax",
         "elu",
         "selu",
-        "softplus",
-        "softsign",
+        # "softplus",
+        # "softsign",
         "relu",
         "tanh",
         "sigmoid",
-        "hard_sigmoid",
+        # "hard_sigmoid",
         "exponential",
         "linear"
     ]
@@ -47,9 +47,9 @@ def activations():
 
 def dropouts():
     return [
-        0.3,
+        # 0.3,
         0.35,
-        0.4,
+        # 0.4,
     ]
 
 
