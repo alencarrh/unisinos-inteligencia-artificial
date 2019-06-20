@@ -1,1 +1,7 @@
-TODO descrever o que será feito no trabalho do ga
+# Capacitated Vehicle Routing Problem (CVRP)
+
+[Link overleaf](https://www.overleaf.com/read/bdyjvczfvysm)
+
+Abstract: This paper approuches the Capacitated Vehicle Routing Problem (CVRP). In the problem we have a warehouse of goods, customers who demands it and truck (s) to make as deliveries. Our goal is to find a good solution, the best possible in na acceptable runtime For this, the chosen approach is the use of a genetic algorithm. That is, we generate and maintain a set of solutions (individuals) and combine iteratively with the goal of generating better solutions. We use 3 instances of the problem. The results obtained were both positive and negative compared to the optimal solutions for the instances provided. This is due  issues  faced to develop the elitism part of the code.
+
+Resumo: Neste artigo iremos abordar o problema computacional de roteamento de veículos de carga (capacitated vehicle routing problem - CVRP). No problema temos um depósito com as mercadorias, clientes que as demandam e caminhão(ões) para fazer as entregas. O nosso objetivo é encontrar uma solução boa, a melhor possível em um tempo de execução aceitável (não necessariamente a ótima). Para isso a abordagem escolhida é o uso de um algoritmo genético. Ou seja, nós geramos e mantemos um conjunto de soluções (indivíduos) e combinamos eles iterativamente com o objetivo de gerar soluções mais aptas (melhores). Nós utilizamos 3 instâncias do problema. Os resultados obtidos tiveram variações positivas e negativas em comparaçao  as soluções  ótimas disponibilizadas pelo fato  que a lógica para realizar o cruzamento dos cromossomos não foi finalizada.
