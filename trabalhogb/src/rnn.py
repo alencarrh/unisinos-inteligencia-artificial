@@ -42,9 +42,10 @@ def train_and_test(combination):
     batch_size = combination["batch_size"]
     epochs = combination["epochs"]
 
+    i+=1
+
     if time.time() - before > 10:
         print(i)
-        i += 1
         before = time.time()
 
     with tf.Session(config=conf) as sess:

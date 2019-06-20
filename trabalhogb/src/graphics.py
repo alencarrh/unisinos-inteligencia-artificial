@@ -5,7 +5,7 @@ def create_graphics(results):
     graphic1, ax1 = plt.subplots(1, figsize=(10, 10))
     graphic2, ax2 = plt.subplots(1, figsize=(10, 10))
 
-    for index, result in enumerate(results[:10]):
+    for index, result in enumerate(results[:6]):
         key = ':'.join(
             [
                 str(index),
@@ -19,7 +19,7 @@ def create_graphics(results):
             ]
         )
 
-        key += " = " + str(result["test_accuracy"])
+        key += " = " + "{:.4f}".format(result["test_accuracy"])
 
         val_acc = result["history"]['acc']
         val_loss = result["history"]['loss']
@@ -43,10 +43,10 @@ def create_graphics(results):
 
     # ax1.legend()
     # ax2.legend()
-    #plt.show()
+    plt.show()
 
-    graphic1.savefig("accuracy.png")
-    graphic2.savefig("loss.png")
+    # graphic1.savefig("accuracy.png")
+    # graphic2.savefig("loss.png")
 
 
 

@@ -3,10 +3,10 @@ def optimizers():
         "sgd",
         "rmsprop",
         "adagrad",
-        # "adadelta",
+        "adadelta",
         "adam",
-        # "adamax",
-        # "nadam"
+        "adamax",
+        "nadam"
     ]
 
 
@@ -18,14 +18,14 @@ def losses():
         "MSLE",
         # "squared_hinge",
         # "hinge",
-        # "categorical_hinge",
-        # "logcosh",
-        # "categorical_crossentropy", # removido por erro
-        # "sparse_categorical_crossentropy", # removido por erro
+        "categorical_hinge",
+        "logcosh",
+        "categorical_crossentropy", # removido por erro
+        "sparse_categorical_crossentropy", # removido por erro
         "binary_crossentropy",
         "kullback_leibler_divergence",
-        # "poisson",
-        # "cosine_proximity"
+        "poisson",
+        "cosine_proximity"
     ]
 
 
@@ -34,12 +34,12 @@ def activations():
         "softmax",
         "elu",
         "selu",
-        # "softplus",
-        # "softsign",
+        "softplus",
+        "softsign",
         "relu",
         "tanh",
-        # "sigmoid",
-        # "hard_sigmoid",
+        "sigmoid",
+        "hard_sigmoid",
         "exponential",
         "linear"
     ]
@@ -53,17 +53,17 @@ def dropouts():
     ]
 
 
-def batches_size():
+def batches_size(): #The batch size defines the number of samples that will be propagated through the network
     return [
         # 64,
-        128,
-        # 192
+        # 128,
+        192
     ]
 
 
 def epochs():
     return [
         # 30,
-        50,
-        # 70
+        # 50,
+        70
     ]
