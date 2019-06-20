@@ -11,6 +11,10 @@ y_test = None
 
 conf = tf.ConfigProto()
 
+import time
+
+before = time.time()
+
 
 def set_data(data):
     global x_train, y_train, x_test, y_test
@@ -25,7 +29,11 @@ def set_thread_size(threads=1):
     )
 
 
+i = 1
+
+
 def train_and_test(combination):
+    global before, i
     optimizer = combination["optimizer"]
     loss = combination["loss"]
     activation_layer_1 = combination["activation_layer_1"]
@@ -33,6 +41,11 @@ def train_and_test(combination):
     dropout = combination["dropout"]
     batch_size = combination["batch_size"]
     epochs = combination["epochs"]
+
+    if time.time() - before > 10:
+        print(i)
+        i += 1
+        before = time.time()
 
     with tf.Session(config=conf) as sess:
         K.set_session(sess)
@@ -68,10 +81,10 @@ def train_and_test(combination):
             combination["test_score"] = score[0]
             combination["test_accuracy"] = score[1]
 
-            print("SUCCESS", combination)
+            # print("SUCCESS", combination)
         except Exception as ex:
             combination["status"] = "error"
-            print("ERROR - ", combination)
+            # print("ERROR - ", combination)
 
         sess.close()
     return combination

@@ -3,10 +3,10 @@ def optimizers():
         "sgd",
         "rmsprop",
         "adagrad",
-        "adadelta",
+        # "adadelta",
         "adam",
-        "adamax",
-        "nadam"
+        # "adamax",
+        # "nadam"
     ]
 
 
@@ -24,8 +24,8 @@ def losses():
         # "sparse_categorical_crossentropy", # removido por erro
         "binary_crossentropy",
         "kullback_leibler_divergence",
-        "poisson",
-        "cosine_proximity"
+        # "poisson",
+        # "cosine_proximity"
     ]
 
 
@@ -38,7 +38,7 @@ def activations():
         # "softsign",
         "relu",
         "tanh",
-        "sigmoid",
+        # "sigmoid",
         # "hard_sigmoid",
         "exponential",
         "linear"
@@ -55,15 +55,15 @@ def dropouts():
 
 def batches_size():
     return [
-        64,
+        # 64,
         128,
-        192
+        # 192
     ]
 
 
 def epochs():
     return [
-        30,
+        # 30,
         50,
-        70
+        # 70
     ]
